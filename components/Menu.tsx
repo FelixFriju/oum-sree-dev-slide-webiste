@@ -1,0 +1,7 @@
+'use client';
+import Link from 'next/link';
+import { AnimatePresence, motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
+import { Menu as MenuIcon, X } from 'lucide-react';
+const items=[['Home','/'],['About','/about'],['Brands','/brands'],['Spirituality','/#spirituality'],['Contact','/contact']];
+export default function Menu(){const [open,setOpen]=useState(false);useEffect(()=>{document.body.style.overflow=open?'hidden':'';return()=>{document.body.style.overflow=''}},[open]);return <><button className="menu-trigger" onClick={()=>setOpen(true)} aria-label="Open menu"><span>Menu</span><MenuIcon/></button><AnimatePresence>{open&&<motion.div className="menu-panel" initial={{clipPath:'inset(0 0 100% 0)'}} animate={{clipPath:'inset(0 0 0% 0)'}} exit={{clipPath:'inset(0 0 100% 0)'}} transition={{duration:.65,ease:[.76,0,.24,1]}}><div className="menu-head"><span>OSD</span><button onClick={()=>setOpen(false)} aria-label="Close menu"><X/></button></div><div className="menu-links">{items.map(([label,href],i)=><motion.div key={label} initial={{y:35,opacity:0}} animate={{y:0,opacity:1}} transition={{delay:.1+i*.06}}><Link href={href} onClick={()=>setOpen(false)}><small>0{i+1}</small><span>{label}</span></Link></motion.div>)}</div><div className="menu-foot"><span>DR. OUM SREE DEV</span><span>SHORANUR · PALAKKAD · KERALA</span></div></motion.div>}</AnimatePresence></>}
